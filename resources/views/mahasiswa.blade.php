@@ -1,53 +1,48 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Mahasiswa</title>
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ asset('bootstrap-5.3.8-dist/css/bootstrap.min.css') }}">
+    <script src="{{ asset('bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js') }}"></script>
 </head>
 
 <body class="bg-light d-flex flex-column min-vh-100">
-
-    <nav class="navbar navbar-dark bg-primary shadow-sm">
+    <nav class="navbar navbar-dark bg-primary shadow-sm mb-4">
         <div class="container">
-            <span class="navbar-brand mb-0 h1">UNPAM - Profile Mahasiswa</span>
+            <a class="navbar-brand" href="#">UNPAM - Profile Mahasiswa</a>
         </div>
     </nav>
-
-    <main class="container flex-grow-1 d-flex justify-content-center align-items-center py-5">
-        <div class="card shadow-sm border-0 w-100" style="max-width: 650px;">
-            <div class="card-header bg-white text-center py-5">
-                <img
-                    src="{{ asset('foto.png') }}"
-                    alt="Foto Mahasiswa"
-                    class="rounded-circle img-thumbnail mb-4"
-                    style="width: 150px; height: 150px; object-fit: cover;"
-                >
-
-                <h2 class="fw-bold">Profile Mahasiswa</h2>
-                <span class="badge bg-success px-3 py-2 mt-3">
-                    {{ $mahasiswa['status'] }}
-                </span>
-            </div>
-
-            <div class="card-body text-center py-4 fs-5">
-                <p><strong>Nama:</strong> {{ $mahasiswa['nama'] }}</p>
-                <p><strong>NIM:</strong> {{ $mahasiswa['nim'] }}</p>
-                <p><strong>Prodi:</strong> {{ $mahasiswa['prodi'] }}</p>
-                <p><strong>Email:</strong> {{ $mahasiswa['email'] }}</p>
-                <p class="mb-0"><strong>Kampus:</strong> {{ $mahasiswa['kampus'] }}</p>
+    <div class="container flex-grow-1">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white text-center py-4">
+                        <div class="d-flex justify-content-center mb-3">
+                            <img src="{{ asset('assets/Kursi.jpg') }}" alt="" class="rounded-circle img-thumbnail"
+                                style="width: 120px; height: 120px; object-fit: cover;">
+                        </div>
+                        <h5 class="card-title mb-4">Profile Mahasiswa</h5>
+                        <span class="badge bg-success">{{ $mahasiswa['status'] }}</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="card-text"><strong>Nama:</strong> {{ $mahasiswa['nama'] }}</p>
+                        <p class="card-text"><strong>NIM:</strong> {{ $mahasiswa['nim'] }}</p>
+                        <p class="card-text"><strong>Prodi:</strong> {{ $mahasiswa['jurusan'] }}</p>
+                        <p class="card-text"><strong>Email:</strong> {{ $mahasiswa['email'] }}</p>
+                        <p class="card-text"><strong>Kampus:</strong> {{ $mahasiswa['kampus'] }}</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </main>
-
-    <footer class="bg-white border-top text-center py-4 mt-auto">
-        © {{ date('Y') }} UNPAM. All rights reserved.
+    </div>
+    <footer class="bg-white text-dark border-top text-center py-3 mt-auto">
+        <div class="container">
+            <p>&copy; {{ date('Y') }} UNPAM. All rights reserved.</p>
+        </div>
     </footer>
-
 </body>
+
 </html>
