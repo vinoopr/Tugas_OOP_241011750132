@@ -9,12 +9,14 @@
     </div>
     <div class="row g-4">
         <div class="col-md-7">
-            <img src="{{ asset('images/'. $project->image) }}" alt="" class="img-fluid h-100 w-100"
+            @if ($project->image)
+                <img src="{{ $project->image_url }}" alt="" class="img-fluid h-100 w-100"
                 style="min-height: 300px; object-fit: cover;">
+                @endif
         </div>
         <div class="col-md-5">
             <div class="card-body ">
-                <h5 class="card-title mb-4">{{ $project->title }}</h5>
+                <h5 class="card-title mb-4">{{ $project->nama_project }}</h5>
                 <div class="mb-2">
                     <small>Tech : {{ $project->teknologi }}</small>
                 </div>

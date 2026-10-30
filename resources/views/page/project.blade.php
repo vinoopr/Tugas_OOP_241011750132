@@ -14,10 +14,12 @@
 
         <div class="col-md-4">
             <div class="card h-100 shadow-sm border-0">
-                <img src="{{ asset('images/'.$project->image) }}" alt="" class="card-img-top"
+                @if ($project->image)
+                <img src="{{ $project->image_url }}" alt="" class="card-img-top"
                     style="height: 200px; object-fit: cover;">
+                @endif
                 <div class="card-body">
-                    <h5 class="card-title mb-4">{{ $project->title }}</h5>
+                    <h5 class="card-title mb-4">{{ $project->nama_project }}</h5>
                     <span class="badge bg-success">{{ $project->status }}</span>
                     <p class="card-text">{{ Str::limit($project->description,50) }}</p>
                 </div>
