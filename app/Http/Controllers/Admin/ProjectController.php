@@ -4,12 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
+    public function cetakLaporan()
+    {
+        $projects = Project::latest('id')->get();
+
+        return Pdf::loadView('admin.projects.laporan-pdf', compact('projects'))
+            ->setPaper('a4', 'portrait')
+            ->stream('laporan.pdf');
+    }
+
     public function index()
     {
         $projects = Project::latest('id')->paginate(10);

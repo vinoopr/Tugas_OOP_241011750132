@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -9,19 +10,22 @@ class AuthenticationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_admin_is_accessible_without_login(): void
+    public function test_admin_redirects_guests_to_login(): void
     {
-        $this->get('/admin')->assertOk()->assertSee('Dashboard');
-        $this->get('/admin/projects')->assertOk();
-        $this->get('/admin/projects/create')->assertOk();
-        $this->get('/login')->assertNotFound();
+        $this->get('/admin')->assertRedirect('/login');
+        $this->get('/admin/projects')->assertRedirect('/login');
+        $this->get('/admin/projects/create')->assertRedirect('/login');
+        $this->get('/login')->assertOk();
     }
 
-    public function test_logout_returns_home_without_login(): void
+    public function test_logout_invalidates_authenticated_session(): void
     {
+        $admin = User::factory()->create();
+        $admin->forceFill(['is_admin' => true])->save();
+        $this->actingAs($admin);
         $this->withSession(['private_value' => 'secret'])->post('/logout')
-            ->assertRedirect('/')->assertSessionMissing('private_value');
+            ->assertRedirect('/login')->assertSessionMissing('private_value');
         $this->assertGuest();
-        $this->get('/admin')->assertOk();
+        $this->get('/admin')->assertRedirect('/login');
     }
 }

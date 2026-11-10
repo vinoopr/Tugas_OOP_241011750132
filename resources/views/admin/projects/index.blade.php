@@ -6,7 +6,10 @@
 <div class="container pb-4">
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
         <h1 class="h3 mb-0">Data Project</h1>
-        <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">Tambah Project</a>
+        <div class="d-flex gap-2">
+            <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">Tambah Project</a>
+            <a href="{{ route('admin.projects.pdf') }}" class="btn btn-danger" target="_blank" rel="noopener">Cetak PDF</a>
+        </div>
     </div>
     @if (session('success'))
         <div class="alert alert-success" role="status">{{ session('success') }}</div>
