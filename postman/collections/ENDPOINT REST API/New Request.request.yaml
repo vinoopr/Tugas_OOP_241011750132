@@ -1,0 +1,15 @@
+$kind: http-request
+url: http://127.0.0.1:8000/api/users
+method: GET
+body:
+  type: json
+  content: |-
+    {
+      "email": "vino@gmail.com",
+      "password": "password123"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: 9|R0h6roNHVWtAVMPc5hCKbhInmzOpOkYixOMaTh50ad496d78
+order: 1000
