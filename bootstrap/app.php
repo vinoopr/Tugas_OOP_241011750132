@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->statefulApi();
         $middleware->redirectUsersTo('/admin');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
@@ -30,6 +31,8 @@ return Application::configure(basePath: dirname(__DIR__))
             $status = $e instanceof AuthenticationException ? 401
                 : ($e instanceof HttpExceptionInterface ? $e->getStatusCode() : 500);
             $message = match ($status) {
+                403 => 'Akses ini hanya untuk admin.',
+                419 => 'Sesi kedaluwarsa. Muat ulang halaman dan login kembali.',
                 401 => 'Token autentikasi tidak valid atau belum diberikan.',
                 404 => 'Data atau endpoint tidak ditemukan.',
                 405 => 'Metode HTTP tidak diizinkan.',

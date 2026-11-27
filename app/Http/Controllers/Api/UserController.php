@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         $data = $request->validate($this->rules());
         $data['password'] = bcrypt($data['password']);
-        $user = User::create($data);
+        $user = User::create($data)->refresh();
 
         return response()->json(['success' => true, 'message' => 'User berhasil dibuat.', 'data' => $user], 201);
     }
@@ -43,9 +43,12 @@ class UserController extends Controller
         return response()->json(['success' => true, 'message' => 'User berhasil diperbarui.', 'data' => $user]);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $user = User::findOrFail($id);
+        if ($request->user()->is($user)) {
+            return response()->json(['success' => false, 'message' => 'Akun yang sedang digunakan tidak dapat dihapus.', 'data' => null], 422);
+        }
         DB::transaction(function () use ($user) {
             $user->tokens()->delete();
             $user->delete();

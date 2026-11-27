@@ -36,6 +36,8 @@ Route::middleware(['auth', EnsureAdmin::class])->prefix('admin')->group(function
         return view('admin.dashboard');
     })->name('admin.home');
 
+    Route::view('users', 'admin.users.index')->name('admin.users.index');
+
     Route::get('projects/pdf', [AdminProjectController::class, 'cetakLaporan'])
         ->name('admin.projects.pdf');
 

@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Admin Dashboard') - MyProfile</title>
     <link rel="stylesheet" href="{{ asset('bootstrap-5.3.8-dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    @stack('styles')
     <script src="{{ asset('bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js') }}" defer></script>
 </head>
 <body>
@@ -39,6 +41,7 @@
             <nav class="nav flex-column gap-2" aria-label="Menu admin">
                 <a href="{{ route('admin.home') }}" class="nav-link {{ request()->routeIs('admin.home') ? 'active' : '' }}" @if(request()->routeIs('admin.home')) aria-current="page" @endif>Dashboard</a>
                 <a href="{{ route('admin.projects.index') }}" class="nav-link {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}" @if(request()->routeIs('admin.projects.*')) aria-current="page" @endif>Data Project</a>
+                <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" @if(request()->routeIs('admin.users.*')) aria-current="page" @endif>Data User</a>
             </nav>
         </aside>
         <div class="admin-workspace">
@@ -46,5 +49,6 @@
             <footer class="admin-footer">&copy; {{ date('Y') }} MyProfile. All rights reserved.</footer>
         </div>
     </div>
+    @stack('scripts')
 </body>
 </html>

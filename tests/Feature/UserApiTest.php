@@ -19,7 +19,7 @@ class UserApiTest extends TestCase
         $user = User::where('email', $payload['email'])->firstOrFail();
         $this->assertFalse($user->is_admin);
         $this->assertTrue(Hash::check($payload['password'], $user->password));
-        $this->withToken($response->json('access_token'))->getJson('/api/users')->assertOk();
+        $this->withToken($response->json('access_token'))->getJson('/api/users')->assertForbidden();
         $this->postJson('/api/register', $payload)->assertUnprocessable()->assertJsonValidationErrors('email');
     }
 
@@ -40,7 +40,7 @@ class UserApiTest extends TestCase
 
     public function test_crud_validation_hashing_missing_users_and_token_cleanup(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['is_admin' => true]);
         $token = $user->createToken('test')->plainTextToken;
         $this->withToken($token);
         $created = $this->postJson('/api/users', ['name' => 'New User', 'email' => 'new@example.com', 'password' => 'secret123', 'is_admin' => true])->assertCreated()->assertJsonMissingPath('data.password');
